@@ -1,4 +1,4 @@
-package com.example.leo.weatherintheplace;
+package com.example.leo.weatherintheplace.ui;
 
 
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.leo.weatherintheplace.R;
 
 
 /**
