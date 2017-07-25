@@ -1,13 +1,20 @@
 package com.example.leo.weatherintheplace.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.leo.weatherintheplace.R;
 import com.example.leo.weatherintheplace.ui.adapter.WeatherGridAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import networkconnection.JSONFetch;
 
 public class FiveDaysWeather extends AppCompatActivity {
 
@@ -30,9 +37,27 @@ public class FiveDaysWeather extends AppCompatActivity {
         longitude = intent.getDoubleExtra(MainActivity.KEY_LONGITUDE, 0.0);
         latitude = intent.getDoubleExtra(MainActivity.KEY_LATITUDE, 0.0);
 
+        getWeatherObject(this, city + "," + countryCode);
+
+
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new WeatherGridAdapter(this));
 
 
+    }
+    private void getWeatherObject(Context context, final String city) {
+        new Thread() {
+            public void run() {
+                JSONFetch jsonFetch = new JSONFetch();
+                JSONObject jsonWeather = jsonFetch.getJSON(this, city);
+
+                TextView textView = (TextView) findViewById(R.id.weather_test_text_view);
+                try {
+                    textView.setText(jsonWeather.getString("name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }
