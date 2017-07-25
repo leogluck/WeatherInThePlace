@@ -19,6 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".FiveDaysWeather"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBGflhN9CRUDnAbdKRTSA9MPfMQEbS8JZ0"/>
     </application>
 
 </manifest>
