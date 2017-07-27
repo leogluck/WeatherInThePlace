@@ -9,13 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leo.weatherintheplace.R;
+import com.example.leo.weatherintheplace.model.WeatherInfo;
+
+import java.util.List;
 
 public class WeatherGridAdapter extends BaseAdapter {
 
     private Context mContext;
+    private List<WeatherInfo.WeatherDetails> mList;
 
-    public WeatherGridAdapter(Context c) {
+    public WeatherGridAdapter(Context c, List<WeatherInfo.WeatherDetails> list) {
         mContext = c;
+        mList = list;
     }
 
 
@@ -47,7 +52,9 @@ public class WeatherGridAdapter extends BaseAdapter {
         ImageView imageView = (ImageView) gridItem.findViewById(R.id.weather_image) ;
         TextView textView = (TextView) gridItem.findViewById(R.id.text_degrees);
         imageView.setImageResource(R.mipmap.ic_launcher);
-        textView.setText("26" + "\u00b0");
+
+        int temp = (int)mList.get(position).getMain().getTemp() - 273;
+        textView.setText(String.valueOf(temp) + " \u00b0");
 
         return gridItem;
     }
