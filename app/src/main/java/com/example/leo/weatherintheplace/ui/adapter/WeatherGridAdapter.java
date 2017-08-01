@@ -1,6 +1,9 @@
 package com.example.leo.weatherintheplace.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,9 @@ import android.widget.TextView;
 import com.example.leo.weatherintheplace.R;
 import com.example.leo.weatherintheplace.model.WeatherInfo;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class WeatherGridAdapter extends BaseAdapter {
@@ -26,7 +32,7 @@ public class WeatherGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 15;
+        return 24;
     }
 
     public Object getItem(int position) {
@@ -49,14 +55,51 @@ public class WeatherGridAdapter extends BaseAdapter {
             gridItem = convertView;
         }
 
-        ImageView imageView = (ImageView) gridItem.findViewById(R.id.weather_image) ;
-        TextView textView = (TextView) gridItem.findViewById(R.id.text_degrees);
-        imageView.setImageResource(R.mipmap.ic_launcher);
 
+        TextView textView = (TextView) gridItem.findViewById(R.id.text_degrees);
         int temp = (int)mList.get(position).getMain().getTemp() - 273;
         textView.setText(String.valueOf(temp) + " \u00b0");
 
+        ImageView imageView = (ImageView) gridItem.findViewById(R.id.weather_image) ;
+        String weather_icon_url = mContext.getString(R.string.icon_url)
+                + mList.get(position).getWeather().get(0).getIcon() + ".png";
+        new WeatherImageLoadTask(weather_icon_url,imageView).execute();
+
         return gridItem;
+    }
+
+    private class WeatherImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+
+        private String url;
+        private ImageView imageView;
+
+        public WeatherImageLoadTask(String url, ImageView imageView) {
+            this.url = url;
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            try {
+                URL urlConnection = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) urlConnection
+                        .openConnection();
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+            imageView.setImageBitmap(result);
+        }
+
     }
 
 }

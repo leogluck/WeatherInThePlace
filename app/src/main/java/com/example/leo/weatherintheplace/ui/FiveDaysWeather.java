@@ -3,8 +3,10 @@ package com.example.leo.weatherintheplace.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.leo.weatherintheplace.R;
 import com.example.leo.weatherintheplace.model.WeatherInfo;
@@ -41,6 +43,9 @@ public class FiveDaysWeather extends AppCompatActivity {
         longitude = intent.getDoubleExtra(MainActivity.KEY_LONGITUDE, 0.0);
         latitude = intent.getDoubleExtra(MainActivity.KEY_LATITUDE, 0.0);
         cityAndCountryCode = city + "," + countryCode;
+
+        TextView textView = (TextView) findViewById(R.id.weather_test_text_view);
+        textView.setText("The weather in " + city + " for 5 days is:");
 
 
         WeatherService weatherService =
