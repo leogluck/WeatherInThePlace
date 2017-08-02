@@ -36,7 +36,7 @@ public class FiveDaysWeather extends AppCompatActivity {
         setContentView(R.layout.activity_five_days_weather);
         gridview = (GridView) findViewById(R.id.gridview);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
 
         city = intent.getStringExtra(MainActivity.KEY_CITY);
         countryCode = intent.getStringExtra(MainActivity.KEY_COUNTRY_CODE);
@@ -63,6 +63,17 @@ public class FiveDaysWeather extends AppCompatActivity {
             @Override
             public void onFailure(Call<WeatherInfo> call, Throwable t) {
 
+            }
+        });
+
+        Button btnShowOnMap = (Button) findViewById(R.id.btnShowOnMap);
+        btnShowOnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentShowOnMap = new Intent(FiveDaysWeather.this, CityOnMap.class);
+                intentShowOnMap.putExtra(MainActivity.KEY_LONGITUDE, longitude);
+                intentShowOnMap.putExtra(MainActivity.KEY_LATITUDE, latitude);
+                startActivity(intentShowOnMap);
             }
         });
 
