@@ -1,0 +1,4 @@
+<resources>
+    <string name="weather_api_key">9b67ca947d05894c29600bd1f6188a6f</string>
+    <string name="icon_url">http://openweathermap.org/img/w/</string>
+</resources>

@@ -24,7 +24,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBGflhN9CRUDnAbdKRTSA9MPfMQEbS8JZ0" />
+            android:value="AIzaSyBOKlkINqotde9UBfZmPEnajSr6MKFOeFs" />
 
         <activity android:name=".ui.CityOnMap"></activity>
     </application>

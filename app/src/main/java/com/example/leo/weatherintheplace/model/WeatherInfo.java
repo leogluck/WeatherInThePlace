@@ -11,10 +11,6 @@ public class WeatherInfo {
         public double getTemp() {
             return temp;
         }
-
-        public void setTemp(double temp) {
-            this.temp = temp;
-        }
     }
 
     public class Weather {
@@ -22,10 +18,6 @@ public class WeatherInfo {
 
         public String getIcon() {
             return icon;
-        }
-
-        public void setIcon(String icon) {
-            this.icon = icon;
         }
     }
 
@@ -37,24 +29,12 @@ public class WeatherInfo {
             return main;
         }
 
-        public void setMain(Main main) {
-            this.main = main;
-        }
-
         public List<Weather> getWeather() {
             return weather;
-        }
-
-        public void setWeather(List<Weather> weather) {
-            this.weather = weather;
         }
     }
 
     public List<WeatherDetails> getList() {
         return list;
-    }
-
-    public void setList(List<WeatherDetails> list) {
-        this.list = list;
     }
 }

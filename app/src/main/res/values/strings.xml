@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">WeatherInThePlace</string>
-    <string name="weather_api_key">9b67ca947d05894c29600bd1f6188a6f</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="show_on_map">Show On Map</string>
-    <string name="icon_url">http://openweathermap.org/img/w/</string>
+    <string name="choose_a_place">Choose a place</string>
+    <string name="degrees">DEGREES</string>
 </resources>

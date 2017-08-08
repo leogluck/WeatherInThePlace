@@ -27,7 +27,6 @@ public class FiveDaysWeather extends AppCompatActivity {
     private String cityAndCountryCode;
     private double longitude;
     private double latitude;
-    private Button showOnMap;
     private GridView gridview;
 
     @Override
@@ -47,17 +46,18 @@ public class FiveDaysWeather extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.weather_test_text_view);
         textView.setText("The weather in " + city + " for 5 days is:");
 
-
         WeatherService weatherService =
                 WeatherAPI.getClient().create(WeatherService.class);
 
-        Call<WeatherInfo> call = weatherService.getWeather(cityAndCountryCode, getString(R.string.weather_api_key));
+        Call<WeatherInfo> call = weatherService.getWeather(cityAndCountryCode,
+                getString(R.string.weather_api_key));
         call.enqueue(new Callback<WeatherInfo>() {
             @Override
             public void onResponse(Call<WeatherInfo> call, Response<WeatherInfo> response) {
                 List<WeatherInfo.WeatherDetails> weatherDetailsList = response.body().getList();
 
-                gridview.setAdapter(new WeatherGridAdapter(FiveDaysWeather.this, weatherDetailsList));
+                gridview.setAdapter(
+                        new WeatherGridAdapter(FiveDaysWeather.this, weatherDetailsList));
             }
 
             @Override
@@ -71,12 +71,11 @@ public class FiveDaysWeather extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentShowOnMap = new Intent(FiveDaysWeather.this, CityOnMap.class);
+                intentShowOnMap.putExtra(MainActivity.KEY_CITY, city);
                 intentShowOnMap.putExtra(MainActivity.KEY_LONGITUDE, longitude);
                 intentShowOnMap.putExtra(MainActivity.KEY_LATITUDE, latitude);
                 startActivity(intentShowOnMap);
             }
         });
-
-
     }
 }

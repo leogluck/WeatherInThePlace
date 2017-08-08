@@ -3,9 +3,11 @@ package com.example.leo.weatherintheplace.ui;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.leo.weatherintheplace.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -20,7 +22,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements
+        GoogleApiClient.OnConnectionFailedListener {
 
     private int PLACE_PICKER_REQUEST = 1;
 
@@ -34,22 +37,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        Button btnChoosePlace = (Button) findViewById(R.id.btnChoosePlace);
+        btnChoosePlace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
-        try {
-            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
+                try {
+                    startActivityForResult(builder.build(MainActivity.this), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-
                 LatLng latlng = place.getLatLng();
 
                 Geocoder gcd = new Geocoder(this, Locale.ENGLISH);
@@ -59,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
                 String city = addresses.get(0).getLocality();
                 String countryCode = addresses.get(0).getCountryCode();
@@ -77,7 +84,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 }
